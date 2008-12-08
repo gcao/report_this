@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
+require 'report_this'
 require 'report_this/config'
 require 'report_this/array_report'
 

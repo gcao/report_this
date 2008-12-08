@@ -10,19 +10,19 @@ module ReportThis
     end
 
     def header
-      "<#{@model.class}>\n"
+      "<#{@model.class}>"
     end
 
     def body
       return "nil\n" if @model.nil?
-      @model.to_s + "\n"
+      @model.to_s
     end
 
     def footer
     end
 
     def to_s
-      "#{header}#{body}#{footer}"
+      "#{header}\n#{body}\n#{footer}"
     end
   end
 end

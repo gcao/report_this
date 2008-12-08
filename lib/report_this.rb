@@ -1,28 +1,34 @@
 module ReportThis
   module InstanceMethods
     def report config = nil
-      klass = self.class.report_class ? 
-              self.class.report_class.to_s.constantize : Stocko::Report::Base
-
-      klass.new(self, config)
+      self.class.report_class.new(self, config)
     end
   end
   
   module ClassMethods
-    def report_class class_name = 'NOT SET'
-      if class_name == 'NOT SET'
+    def report_class klass = 'NOT SET'
+      if klass == 'NOT SET'
         if @report_class
-          @report_class.to_s
-        else 
-          default_report_class = self.to_s + "Report"
-          if default_report_class.to_class
-            default_report_class
+          if @report_class.is_a? Class
+            @report_class
           else
-            nil
+            @report_class = @report_class.to_s.constantize
           end
+        else 
+          @report_class = default_report_class
         end
       else
-        @report_class = class_name
+        @report_class = klass
+      end
+    end
+    
+    private 
+    
+    def default_report_class
+      begin
+        (self.to_s + "Report").constantize
+      rescue NameError
+        ReportThis::Base
       end
     end
   end

@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/spec_helper'
 
 require 'report_this'
 require 'report_this/base'
+require 'report_this/array_report'
 
 describe ReportThis do
   it "should add report_class method to Object class" do
@@ -27,5 +28,14 @@ describe ReportThis do
   it "report_class returns default report class" do
     class TestClass1; end
     TestClass1.report_class.should == ReportThis::Base
+  end
+  
+  it "default report class for Array is ReportThis::ArrayReport" do
+    Array.report_class.should == ReportThis::ArrayReport
+  end
+  
+  it "default report class for Array is ::ArrayReport if exists" do
+    class ArrayReport; end
+    Array.report_class.should == ::ArrayReport
   end
 end
